@@ -3,7 +3,6 @@
         $username = preventInject($_POST['username']);
         $password = preventInject($_POST['password']);
 
-        // TODO prüfen ob SHA1 wirklich der richtige Weg ist
         $sql = "SELECT ID, TYPE FROM USERS WHERE USERNAME='" . $username . "' AND PASSWORD=AES_ENCRYPT('" . $password . "', '" . MYSQL_PASSWORD_SALT . "')";
         $userRow = getSingleRowByStatement($sql);
         if (isset($userRow)) {
@@ -14,7 +13,7 @@
         } else {
 ?>
         <div class="alert alert-danger" role="alert">
-            Logindaten fehlerhaft - bitte prüfen Sie Ihre Eingaben
+            Please check your Login-Data
         </div>
 <?php
         }

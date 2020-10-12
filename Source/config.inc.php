@@ -1,6 +1,6 @@
 <?php
 
-  // Datenbankconfig
+  // Database-Host
  define('DB_HOST', 'localhost');
 
  // Local

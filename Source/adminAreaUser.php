@@ -3,7 +3,7 @@
 <?php
     if (isset($_POST['createUserRequest']) || isset($_POST['saveUser'])) {
 ?>
-        <h3>neuen Benutzer anlegen</h3>
+        <h3>Add User</h3>
 <?php
         $invalidUsername = false;
         $invalidPassword = false;
@@ -31,13 +31,13 @@
                     $userSaved = true;
 ?>
                 <div class="alert alert-success" role="alert">
-                    Der Benutzer wurde erfolgreich gespeichert
+                    User successful saved
                 </div>
 <?php
                 } else {
 ?>
                 <div class="alert alert-danger" role="alert">
-                    Beim Speichern des Benutzers ein ein Fehler aufgetreten.
+                    User could not be saved
                 </div>
 <?php
                 }
@@ -49,49 +49,49 @@
 
         <form method="post">
             <div class="form-group">
-                <label for="username">Benutzername:</label>
+                <label for="username">Username:</label>
                 <input type="text" class="form-control <?php if ($invalidUsername) echo 'is-invalid'; ?>" name="username" id="username" value="<?php echo $_POST['username']; ?>">
                 <?php if ($invalidUsername) { ?>
                     <div class="invalid-feedback">
-                        Benutzername ungültig
+                        Username invalid
                     </div>
                 <?php } ?>
             </div>
             <div class="form-group">
-                <label for="usergroup">Benutzergruppe:</label>
+                <label for="usergroup">Group:</label>
                 <select class="form-control" id="usergroup" name="usergroup">
-                    <option value="1">Sprecher</option>
+                    <option value="1">Speaker</option>
                     <option value="2">Admin</option>
                 </select>
             </div>
             <div class="form-group">
-                <label for="pwd1">Passwort:</label>
+                <label for="pwd1">Password:</label>
                 <input type="password" class="form-control <?php if ($invalidPassword) echo 'is-invalid'; ?>" name="pwd1" id="pwd1" value="<?php echo $_POST['pwd1']; ?>">
                 <?php if ($invalidPassword) { ?>
                     <div class="invalid-feedback">
-                        Passwort ungültig
+                        Password invalid
                     </div>
                 <?php } ?>
             </div>
             <div class="form-group">
-                <label for="pwd2">Passwort (Wiederholung):</label>
+                <label for="pwd2">Password (repeat):</label>
                 <input type="password" class="form-control" name="pwd2" id="pwd2" value="<?php echo $_POST['pwd2']; ?>">
             </div>
 
-            <button type="submit" name="saveUser" class="btn btn-outline-primary mb-2">Benutzer speichern</button>
+            <button type="submit" name="saveUser" class="btn btn-outline-primary mb-2">Save user</button>
         </form>
 <?php
         }
     } else {
 ?>
-<h3>verfügbare Benutzer</h3>
+<h3>existing users</h3>
 <table class="table">
   <thead>
     <tr>
       <th scope="col">#</th>
-      <th scope="col">Benutzername</th>
-      <th scope="col">Level</th>
-      <th scope="col">anzahl offener Phrases</th>
+      <th scope="col">Username</th>
+      <th scope="col">Group</th>
+      <th scope="col">Open Phrases</th>
     </tr>
   </thead>
   <tbody>
@@ -103,7 +103,7 @@
     <tr>
       <th scope="row"><?php echo $zeile[0]; ?></th>
       <td><?php echo $zeile[1]; ?></td>
-      <td><?php if ($zeile[2] == 2) echo "Admin"; else echo "Sprecher"; ?></td>
+      <td><?php if ($zeile[2] == 2) echo "Admin"; else echo "Speaker"; ?></td>
       <td><?php if ($zeile[2] == 2) echo "-"; else echo getSingleValueByStatement("SELECT COUNT(*) FROM PHRASES WHERE USER_ID=" . $zeile[0]. " AND STATE=0"); ?></td>
     </tr>
 
@@ -115,7 +115,7 @@
 </table>
 
 <form method="post">
-    <button type="submit" name="createUserRequest" class="btn btn-outline-primary mb-2">Neuen User anlegen</button>
+    <button type="submit" name="createUserRequest" class="btn btn-outline-primary mb-2">Add new User</button>
 </form>
 
 <?php

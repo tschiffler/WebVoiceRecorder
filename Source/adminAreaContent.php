@@ -40,17 +40,17 @@
     if (!isset($_POST['doUpload']) || isset($FAILURE)) {
 ?>
 
-Über diese Funktion kann einzelnen Usern neuer Content zugewiesen werden welchen diese zu sprechen haben.<br/>
-<u>Anwendung:</u><br/>
+This function can be used to assign new content to individual users which they have to speak.<br/>
+<u>Usage:</u><br/>
 <ul>
-    <li>Benutzer, welchen den Text sprechen sollen, auswählen</li>
-    <li>Sprache, in welcher die Texte gesprochen werden sollen, auswählen</li>
-    <li>Datei mit den Texten auswählen (Textdatei, je Zeile 1 Text)</li>
-    <li>Upload durchführen</li>
+    <li>Select users who should speak the text</li>
+    <li>Select the language in which the texts should be spoken</li>
+    <li>Select the file with the texts (text file, 1 utterance per line)</li>
+    <li>perform upload</li>
 </ul>
 <br/>
 
-<h3>Neuen Content hinzufügen</h3>
+<h3>add new content</h3>
 <?php
     if (isset($FAILURE)) {
 ?>
@@ -62,7 +62,7 @@
 ?>
 <form method="post" enctype="multipart/form-data">
     <div class="row">
-        <div class="col-3">gewählte Benutzer</div>
+        <div class="col-3">selectd users</div>
         <div class="col-9">
 <?php
 
@@ -70,7 +70,7 @@
 
     while ($zeile = mysqli_fetch_row($result)) {
 ?>
-        <input type="checkbox" name="selectedUser_<?php echo $zeile[0]; ?>" value="true"> <?php echo $zeile[1]; ?> - offene Phrases: <?php echo getSingleValueByStatement("SELECT COUNT(*) FROM PHRASES WHERE USER_ID=" . $zeile[0]. " AND STATE=0"); ?><br/>
+        <input type="checkbox" name="selectedUser_<?php echo $zeile[0]; ?>" value="true"> <?php echo $zeile[1]; ?> - open phrases: <?php echo getSingleValueByStatement("SELECT COUNT(*) FROM PHRASES WHERE USER_ID=" . $zeile[0]. " AND STATE=0"); ?><br/>
 <?php
     }
 
@@ -78,21 +78,21 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-3">Sprache</div>
+        <div class="col-3">language</div>
         <div class="col-9">
             <select name="language">
-                <option value="de">Deutsch</option>
-                <option value="en">Englisch</option>
+                <option value="de">german</option>
+                <option value="en">english</option>
             </select>
         </div>
     </div>
     <div class="row">
-        <div class="col-3">Datei mit Texten</div>
+        <div class="col-3">File with content</div>
         <div class="col-9">
             <input name="contentFile" type="file" accept="text/*">
         </div>
     </div>
-    <button type="submit" name="doUpload" class="btn btn-outline-primary mb-2">Upload durchführen</button>
+    <button type="submit" name="doUpload" class="btn btn-outline-primary mb-2">do upload</button>
 </form>
 
 <?php

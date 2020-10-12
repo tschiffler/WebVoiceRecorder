@@ -3,11 +3,6 @@
  *
  * Created on 19.12.2006 by Thomas Schiffler
  *
- * Copyright by Thomas Schiffler
- * www.ThomasSchiffler.de
- *
- * Die Nutzung dieser Software ist nur durch vorherige schriftliche Genehmigung durch Thomas Schiffler erlaubt
- *
  */
 
  function connectDatabase($db_host, $db_user, $db_password, $db_name) {
@@ -100,7 +95,7 @@
  }
 
  function preventInject($value) {
-    // TODO gibt es hier noch weitere Dinge die man tun kann um mögliche Injections zu verhindern
+    // TODO are there more functions to prevent injection?
     return mysqli_real_escape_string ($_SESSION["db_connection"], $value);
  }
 

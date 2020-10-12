@@ -1,5 +1,4 @@
-Ich bin der erste Satz
-Ich bin der zweite Satz
-so kann das weiter gehen
-Einfach Zeile für Zeile die gewünschten Texte eintragen
-hochladen und importieren
+first utterance
+i am the second utterance
+you can go on as much as you want
+just upload and import
