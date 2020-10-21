@@ -7,6 +7,11 @@ All functions in a short overview:
     - register as much users as you want to
     - upload content that user has to speak by a simple textfile upload
     - assign tasks to speak to users
+    - export spoken content to csv-file with following columns
+        - filename
+        - id of speaking user
+        - language
+        - spoken text
 - *Userarea*    
     - Users that has been created can sign in
     - User has to accept data privacy before recording is enabled
