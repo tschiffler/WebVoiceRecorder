@@ -95,6 +95,36 @@ This function can be used to assign new content to individual users which they h
     <button type="submit" name="doUpload" class="btn btn-outline-primary mb-2"><span class="oi oi-cloud-upload" aria-hidden="true"></span> do upload</button>
 </form>
 
+
+<?php
+    if (isset($_POST['doExport'])) {
+        $result = selectFromTable("SELECT ID, USER_ID, LANGUAGE, PHRASE FROM PHRASES WHERE STATE=1");
+        $fileContent = "ID;USER-ID;LANG;PHRASE\n";
+        while ($zeile = mysqli_fetch_row($result)) {
+            $fileContent .= $zeile[0] . ";" . $zeile[1] . ";" . $zeile[2] . ";" . $zeile[3] . "\n";
+        }
+        if (file_put_contents("upload/export.csv", $fileContent)) {
+?>
+        <div class="alert alert-success" role="alert">
+            Export to upload/export.csv successful
+        </div>
+<?php
+        } else {
+?>
+        <div class="alert alert-danger" role="alert">
+            Export could not be created
+        </div>
+<?php
+        }
+    }
+?>
+
+<br/>
+<h3>export content</h3>
+To export the spoken content to a csv-file just use the following button.<br/><br/>
+<form method="post" enctype="multipart/form-data">
+    <button type="submit" name="doExport" class="btn btn-outline-primary mb-2"><span class="oi oi-cloud-download" aria-hidden="true"></span> do generate exportfile</button>
+</form>
 <?php
     }
 ?>
