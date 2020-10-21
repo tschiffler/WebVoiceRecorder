@@ -7,5 +7,5 @@
                 <label for="passwort">Password:</label>
                 <input type="password" class="form-control" name="password" id="passwort">
             </div>
-            <button type="submit" name="login" class="btn btn-outline-primary mb-2">Login</button>
+            <button type="submit" name="login" class="btn btn-outline-primary mb-2"><span class="oi oi-account-login" aria-hidden="true"></span> Login</button>
         </form>

@@ -9,8 +9,9 @@
     </div>
 
     <div id="controls">
-  	    <button id="recordButton" class="btn btn-outline-success">Start</button>
-  	    <button id="stopButton" class="btn btn-outline-danger" disabled>Stop</button>
+  	    <button id="recordButton" class="btn btn-outline-primary"><span class="oi oi-microphone" aria-hidden="true"></span> Start</button>
+  	    <button id="stopButton" class="btn btn-outline-success"><span class="oi oi-check" aria-hidden="true"></span>Stop - File OK</button>
+  	    <button id="cancelButton" class="btn btn-outline-danger"><span class="oi oi-x" aria-hidden="true"></span>Stop - File broken (record again)</button>
     </div>
 
   	<script src="js/recorder.js"></script>
@@ -25,3 +26,5 @@
         }
     }
 ?>
+
+<span class="oi oi-icon-name" title="icon name" aria-hidden="true"></span>

@@ -78,7 +78,7 @@
                 <input type="password" class="form-control" name="pwd2" id="pwd2" value="<?php echo $_POST['pwd2']; ?>">
             </div>
 
-            <button type="submit" name="saveUser" class="btn btn-outline-primary mb-2">Save user</button>
+            <button type="submit" name="saveUser" class="btn btn-outline-primary mb-2"><span class="oi oi-check" aria-hidden="true"></span> Save user</button>
         </form>
 <?php
         }
@@ -115,7 +115,7 @@
 </table>
 
 <form method="post">
-    <button type="submit" name="createUserRequest" class="btn btn-outline-primary mb-2">Add new User</button>
+    <button type="submit" name="createUserRequest" class="btn btn-outline-primary mb-2"><span class="oi oi-plus" aria-hidden="true"></span> Add new User</button>
 </form>
 
 <?php

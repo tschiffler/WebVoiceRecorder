@@ -92,7 +92,7 @@ This function can be used to assign new content to individual users which they h
             <input name="contentFile" type="file" accept="text/*">
         </div>
     </div>
-    <button type="submit" name="doUpload" class="btn btn-outline-primary mb-2">do upload</button>
+    <button type="submit" name="doUpload" class="btn btn-outline-primary mb-2"><span class="oi oi-cloud-upload" aria-hidden="true"></span> do upload</button>
 </form>
 
 <?php

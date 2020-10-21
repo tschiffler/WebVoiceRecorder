@@ -11,16 +11,26 @@ var audioContext //audio context to help us record
 
 var recordButton = document.getElementById("recordButton");
 var stopButton = document.getElementById("stopButton");
+var cancelButton = document.getElementById("cancelButton");
 
 //add events to those 2 buttons
 recordButton.addEventListener("click", startRecording);
 stopButton.addEventListener("click", stopRecording);
+cancelButton.addEventListener("click", cancelRecording);
+
+stopButton.style.display = 'none';
+cancelButton.style.display = 'none';
 
 function startRecording() {
     var constraints = { audio: true, video:false }
 
-	recordButton.disabled = true;
+	recordButton.style.display = 'none';
+
+    stopButton.style.display = 'block';
+    cancelButton.style.display = 'block';
+
 	stopButton.disabled = false;
+	cancelButton.disabled = false;
 
 	navigator.mediaDevices.getUserMedia(constraints).then(function(stream) {
 		audioContext = new AudioContext();
@@ -46,6 +56,7 @@ function startRecording() {
 function stopRecording() {
 	//disable the stop button, enable the record too allow for new recordings
 	stopButton.disabled = true;
+	cancelButton.disabled = true;
 	recordButton.disabled = false;
 
 	//tell the recorder to stop the recording
@@ -56,6 +67,19 @@ function stopRecording() {
 
 	//create the wav blob and pass it on to createDownloadLink
 	rec.exportWAV(createDownloadLink);
+}
+
+function cancelRecording() {
+	//disable the stop button, enable the record too allow for new recordings
+	stopButton.disabled = true;
+	cancelButton.disabled = true;
+	recordButton.disabled = false;
+
+	//tell the recorder to stop the recording
+	rec.stop();
+
+    // Reload Page
+	location.reload();
 }
 
 function createDownloadLink(blob) {

@@ -11,14 +11,20 @@ All functions in a short overview:
     - Users that has been created can sign in
     - User has to accept data privacy before recording is enabled
     - System shows the user the text that has to be spoken
-    - User clicks on "Start"-Button to start recording
-    - After click on "Stop" recording is stoped, file is tranfered to server
+    - after Click on "Start"-Button, recording is enabled
+        - use "Stop - File is OK" to save File and go to next
+        - use "Stop - File is Broken" to record File again
     - After the file is transfered to server, the User is asked to speak the next utterance  
 
 ## used technologies
 - Language: PHP + JavaScript
 - Database: mysql
 - Script to record: [recorder.js](https://github.com/mattdiamond/Recorderjs)
+
+## server requirements
+- Apache Webserver
+- PHP interpreter (current version)
+- MySql Database 
 
 ## setup
 - download or clone the script
