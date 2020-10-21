@@ -92,6 +92,7 @@
       <th scope="col">Username</th>
       <th scope="col">Group</th>
       <th scope="col">Open Phrases</th>
+      <th scope="col">Spoken Phrases</th>
     </tr>
   </thead>
   <tbody>
@@ -105,6 +106,7 @@
       <td><?php echo $zeile[1]; ?></td>
       <td><?php if ($zeile[2] == 2) echo "Admin"; else echo "Speaker"; ?></td>
       <td><?php if ($zeile[2] == 2) echo "-"; else echo getSingleValueByStatement("SELECT COUNT(*) FROM PHRASES WHERE USER_ID=" . $zeile[0]. " AND STATE=0"); ?></td>
+      <td><?php if ($zeile[2] == 2) echo "-"; else echo getSingleValueByStatement("SELECT COUNT(*) FROM PHRASES WHERE USER_ID=" . $zeile[0]. " AND STATE=1"); ?></td>
     </tr>
 
 <?php
