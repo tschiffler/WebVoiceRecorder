@@ -8,8 +8,7 @@
  function connectDatabase($db_host, $db_user, $db_password, $db_name) {
      $_SESSION["db_connection"] = mysqli_connect($db_host, $db_user, $db_password, $db_name);
  	 if (!$_SESSION["db_connection"]) {
- 	    echo "Database connection could not be established";
- 	 	exit();
+ 	 	exit("Database connection could not be established");
  	 }
  }
 
