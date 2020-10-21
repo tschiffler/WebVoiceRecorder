@@ -1,5 +1,5 @@
 # WebVoiceRecorder
-This project contains a simple Script that is used to record voice files by users. The Idea of the project is based on a Speech to Text Benachmark where we needed a solution to record a huge amount of voice files by different users. So I decided to create simple web gui where we are able to register users, advice those users to speak given content and save the recorded voice files to the storage.
+This project contains a simple Script that is used to record voice files by users. The Idea of the project is based on a Speech to Text Benchmark where we needed a solution to record a huge amount of voice files by different users. So I decided to create simple web gui where we are able to register users, advice those users to speak given content and save the recorded voice files to the storage. After all recordings are done the spoken content can be exported to a CSV-File. This file can be used to create a stt benchmark, calculate the word error rate (wer) or to train and validate a new model.
 
 All functions in a short overview:
 
