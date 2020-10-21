@@ -12,7 +12,7 @@
 <html>
   <head>
     <meta charset="UTF-8">
-    <title>Simple Voice Recorder</title>
+    <title>Web Voice Recorder</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <!-- Latest compiled and minified Bootstrap CSS -->
@@ -27,7 +27,7 @@
     <link rel="stylesheet" type="text/css" href="style.css">
   </head>
   <body>
-    <h1>Simple Voice Recorder</h1>
+    <h1>Web Voice Recorder</h1>
     <div class="container-sm">
 <?php
     // check if Login or Logout is Executed
