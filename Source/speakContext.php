@@ -1,11 +1,21 @@
 <?php
     if (isset($_SESSION['userLoggedIn']) && $_SESSION['userLoggedIn']) {
-        $sql = "SELECT ID, PHRASE FROM PHRASES WHERE USER_ID=" . $_SESSION['userId'] . " AND STATE=0";
+        $sql = "SELECT ID, PHRASE, LANGUAGE FROM PHRASES WHERE USER_ID=" . $_SESSION['userId'] . " AND STATE=0 ORDER BY RAND() LIMIT 1";
         $dbRow = getSingleRowByStatement($sql);
         if (isset($dbRow)) {
+            // TODO - Quickfix - must be changed
+            $langTag = "german";
+            if ($dbRow[2] == "de") {
+                $langTag = "german";
+            } else if ($dbRow[2] == "en") {
+                $langTag = "english";
+            }
 ?>
     <div id="phrase">
-        <b>Please speek: (<span id="phraseId"><?php echo $dbRow[0]; ?></span>):</b> <span id="phraseContent"><?php echo $dbRow[1]; ?></span>
+        <u>Please speak (<span id="phraseId"><?php echo $dbRow[0]; ?></span>) in <b><?php echo $langTag; ?></b> the text as it is displayed:</u>
+        <ul>
+            <li><span id="phraseContent"><?php echo $dbRow[1]; ?></span></li>
+        </ul>
     </div>
 
     <div id="controls">
