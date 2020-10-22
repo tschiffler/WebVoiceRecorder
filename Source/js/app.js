@@ -59,6 +59,9 @@ function stopRecording() {
 	cancelButton.disabled = true;
 	recordButton.disabled = false;
 
+    // do sleep 0,5 seconds
+    sleep(0.5 * 1000);
+
 	//tell the recorder to stop the recording
 	rec.stop();
 
@@ -102,4 +105,12 @@ function createDownloadLink(blob) {
     fd.append("audio_data",blob, filename);
     xhr.open("POST","upload.php?userId=" + document.getElementById("userId").innerHTML + "&phraseId=" + document.getElementById("phraseId").innerHTML,true);
     xhr.send(fd);
+}
+
+function sleep(milliseconds) {
+  const date = Date.now();
+  let currentDate = null;
+  do {
+    currentDate = Date.now();
+  } while (currentDate - date < milliseconds);
 }
