@@ -62,7 +62,7 @@ This function can be used to assign new content to individual users which they h
 ?>
 <form method="post" enctype="multipart/form-data">
     <div class="row">
-        <div class="col-3">selectd users</div>
+        <div class="col-3">selected users</div>
         <div class="col-9">
 <?php
 

@@ -1,18 +1,25 @@
 <h2>Usermanagement</h2>
 
 <?php
-    if (isset($_POST['createUserRequest']) || isset($_POST['saveUser'])) {
+    if (isset($_POST['createUserRequest']) || isset($_POST['saveUser']) || isset($_POST['editUserId'])) {
+        if (isset($_POST['editUserId'])) {
+?>
+        <h3>Edit User</h3>
+<?php
+        } else {
 ?>
         <h3>Add User</h3>
 <?php
+        }
         $invalidUsername = false;
         $invalidPassword = false;
         $userSaved = false;
 
         if (isset($_POST['saveUser'])) {
-
-            if (!isFieldSet($_POST['username']) || checkUniqueExist("USERS", "USERNAME", preventInject($_POST['username']))) {
-                $invalidUsername = true;
+            if (!isset($_POST['editUserId'])) {
+                if (!isFieldSet($_POST['username']) || checkUniqueExist("USERS", "USERNAME", preventInject($_POST['username']))) {
+                    $invalidUsername = true;
+                }
             }
             if (!isFieldSet($_POST['pwd1']) ||
                 !isFieldSet($_POST['pwd2']) ||
@@ -21,13 +28,24 @@
             }
 
             if (!$invalidUsername && !$invalidPassword) {
-                // Do Persist
-                $sqlStatement = "INSERT INTO USERS (USERNAME, PASSWORD, TYPE) VALUES (";
-                $sqlStatement .= "'" . preventInject($_POST['username']) . "', ";
-                $sqlStatement .= "AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
-                $sqlStatement .= $_POST['usergroup'] . ")";
+                if (isset($_POST['editUserId'])) {
+                    $sqlStatement = "UPDATE USERS SET ";
+                    $sqlStatement .= "PASSWORD = AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
+                    $sqlStatement .= "TYPE = " . $_POST['usergroup'];
+                    $sqlStatement .= " WHERE ID = " . $_POST['editUserId'];
 
-                if (db_insertStatement($sqlStatement)) {
+                    $saveSuccessful = db_Statement($sqlStatement);
+                } else {
+                    // create new user
+                    $sqlStatement = "INSERT INTO USERS (USERNAME, PASSWORD, TYPE) VALUES (";
+                    $sqlStatement .= "'" . preventInject($_POST['username']) . "', ";
+                    $sqlStatement .= "AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
+                    $sqlStatement .= $_POST['usergroup'] . ")";
+
+                    $saveSuccessful = db_insertStatement($sqlStatement);
+                }
+
+                if ($saveSuccessful) {
                     $userSaved = true;
 ?>
                 <div class="alert alert-success" role="alert">
@@ -46,11 +64,21 @@
 
         if (!$userSaved) {
 ?>
-
         <form method="post">
+<?php
+            if (isset($_POST['editUserId'])) {
+                $existingUserData = getSingleRowByStatement("SELECT ID, USERNAME, TYPE FROM USERS WHERE ID=" . $_POST['editUserId']);
+                $_POST['username'] = $existingUserData[1];
+                $_POST['usergroup'] = $existingUserData[2];
+?>
+            <input type="hidden" name="editUserId" value="<?php echo $_POST['editUserId']; ?>" />
+<?php
+            }
+
+?>
             <div class="form-group">
                 <label for="username">Username:</label>
-                <input type="text" class="form-control <?php if ($invalidUsername) echo 'is-invalid'; ?>" name="username" id="username" value="<?php echo $_POST['username']; ?>">
+                <input type="text" class="form-control <?php if ($invalidUsername) echo 'is-invalid'; ?>" name="username" id="username" <?php if (isset($_POST['editUserId'])) echo "disabled"; ?> value="<?php echo $_POST['username']; ?>">
                 <?php if ($invalidUsername) { ?>
                     <div class="invalid-feedback">
                         Username invalid
@@ -60,8 +88,8 @@
             <div class="form-group">
                 <label for="usergroup">Group:</label>
                 <select class="form-control" id="usergroup" name="usergroup">
-                    <option value="1">Speaker</option>
-                    <option value="2">Admin</option>
+                    <option value="1" <?php if (isset($_POST['usergroup']) && ($_POST['usergroup'] == 1)) echo "selected"; ?>>Speaker</option>
+                    <option value="2" <?php if (isset($_POST['usergroup']) && ($_POST['usergroup'] == 2)) echo "selected"; ?>>Admin</option>
                 </select>
             </div>
             <div class="form-group">
@@ -84,6 +112,17 @@
         }
     } else {
 ?>
+
+<script type="text/javascript">
+    function editUser(userId) {
+        var form = $('<form method="post">' +
+          '<input type="hidden" name="editUserId" value="' + userId + '" />' +
+          '</form>');
+        $('body').append(form);
+        form.submit();
+    }
+</script>
+
 <h3>existing users</h3>
 <table class="table">
   <thead>
@@ -101,7 +140,7 @@
     while ($zeile = mysqli_fetch_row($result)) {
 ?>
 
-    <tr>
+    <tr onclick="editUser(<?php echo $zeile[0]; ?>)">
       <th scope="row"><?php echo $zeile[0]; ?></th>
       <td><?php echo $zeile[1]; ?></td>
       <td><?php if ($zeile[2] == 2) echo "Admin"; else echo "Speaker"; ?></td>
