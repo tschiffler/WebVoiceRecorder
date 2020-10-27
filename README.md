@@ -21,6 +21,44 @@ All functions in a short overview:
         - use "Stop - File is Broken" to record File again
     - After the file is transfered to server, the User is asked to speak the next utterance  
 
+## Usage
+
+### Login
+Login as user that has been definied by adminarea (or directly in database)
+
+![Login Screen](Documentation/00 images/screen_login.png?raw=true "Login Screen")
+
+### Admin-Area
+
+#### User-Management
+List of existing Users, new Users can be created by click on specified button. To edit a user just click on the requested row
+
+![List of existing Users](Documentation/00 images/usermanagement_list.png?raw=true "List of existing Users")
+
+Screen to create or edit a User. Only users with role "Speaker" are able to speak content.
+
+![Create new User](Documentation/00 images/usermanagement_create.png?raw=true "Create new User")
+
+#### Content-Management
+Upload the CSV-File (example is located in Documentation/02 Dataset) and assign the content that should be spoken to the users.
+
+![manage content that users should speak](Documentation/00 images/contentmanagement.png?raw=true "manage content that users should speak")
+
+### User-Area
+After every login, every user (role 'Speaker') must approve the data privacy check. All approvals are stored in the database
+
+![data privacy approval](Documentation/00 images/user_dataprivacy.png?raw=true "data privacy approval")
+
+The main screen to start a recording. The text that should be spoken is written on the screen. Just click 'Start' button to start the record.
+
+![start recording](Documentation/00 images/user_speak_start.png?raw=true "start recording")
+
+While the recording the user can choose if the file was OK or if the user made an mistake to revoke the recording.
+ 
+![stop recording](Documentation/00 images/user_speak_stop.png?raw=true "stop recording")
+
+**Location of Voice-Files:** All files that are recorded by the users are stored in the /upload directory. Just connect by FTP to your server and download the generated voice files.
+
 ## used technologies
 - Language: PHP + JavaScript
 - Database: mysql
@@ -28,6 +66,7 @@ All functions in a short overview:
 
 ## server requirements
 - Apache Webserver
+    - **Important**: The script _must be accessed by https_, otherwise the recorder will not work
 - PHP interpreter (current version)
 - MySql Database 
 
