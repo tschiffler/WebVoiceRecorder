@@ -1,2 +1,4 @@
 .idea/
 Source/upload/*.wav
+Source/vendor/
+Source/composer.lock

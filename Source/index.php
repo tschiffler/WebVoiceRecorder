@@ -4,6 +4,9 @@
     require_once 'config.inc.php';
     require_once './functions/database.php';
     require_once './functions/validateFunctions.php';
+    require_once './functions/frontendFunctions.php';
+
+    require  './vendor/autoload.php';
 
     connectDatabase(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 ?>

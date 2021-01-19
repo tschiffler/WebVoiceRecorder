@@ -21,16 +21,20 @@
                     $invalidUsername = true;
                 }
             }
-            if (!isFieldSet($_POST['pwd1']) ||
+
+            if (isLocalUsermanagementEnabled() &&
+                (!isFieldSet($_POST['pwd1']) ||
                 !isFieldSet($_POST['pwd2']) ||
-                ($_POST['pwd1'] != $_POST['pwd2'])) {
+                ($_POST['pwd1'] != $_POST['pwd2']))) {
                 $invalidPassword = true;
             }
 
             if (!$invalidUsername && !$invalidPassword) {
                 if (isset($_POST['editUserId'])) {
                     $sqlStatement = "UPDATE USERS SET ";
-                    $sqlStatement .= "PASSWORD = AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
+                    if (isLocalUsermanagementEnabled()) {
+                        $sqlStatement .= "PASSWORD = AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
+                    }
                     $sqlStatement .= "TYPE = " . $_POST['usergroup'];
                     $sqlStatement .= " WHERE ID = " . $_POST['editUserId'];
 
@@ -39,7 +43,12 @@
                     // create new user
                     $sqlStatement = "INSERT INTO USERS (USERNAME, PASSWORD, TYPE) VALUES (";
                     $sqlStatement .= "'" . preventInject($_POST['username']) . "', ";
-                    $sqlStatement .= "AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
+                    if (isLocalUsermanagementEnabled()) {
+                        $sqlStatement .= "AES_ENCRYPT('" . $_POST['pwd1'] . "', '" . MYSQL_PASSWORD_SALT . "'), ";
+                    } else {
+                        $sqlStatement .= "null, ";
+                    }
+
                     $sqlStatement .= $_POST['usergroup'] . ")";
 
                     $saveSuccessful = db_insertStatement($sqlStatement);
@@ -85,6 +94,9 @@
                     </div>
                 <?php } ?>
             </div>
+            <?php
+                if (isLocalUsermanagementEnabled()) {
+            ?>
             <div class="form-group">
                 <label for="usergroup">Group:</label>
                 <select class="form-control" id="usergroup" name="usergroup">
@@ -105,7 +117,13 @@
                 <label for="pwd2">Password (repeat):</label>
                 <input type="password" class="form-control" name="pwd2" id="pwd2" value="<?php echo $_POST['pwd2']; ?>">
             </div>
-
+            <?php
+                } else {
+            ?>
+                <input type="hidden" name="usergroup" value="1" />
+            <?php
+                }
+             ?>
             <button type="submit" name="saveUser" class="btn btn-outline-primary mb-2"><span class="oi oi-check" aria-hidden="true"></span> Save user</button>
         </form>
 <?php

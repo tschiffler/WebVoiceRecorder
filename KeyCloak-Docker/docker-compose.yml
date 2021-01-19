@@ -1,0 +1,10 @@
+version: '3.0'
+services:
+  container-keycloak:
+    image: quay.io/keycloak/keycloak:11.0.3
+    ports:
+      - 8188:8080
+    environment:
+      KEYCLOAK_USER: admin
+      KEYCLOAK_PASSWORD: password
+    restart: on-failure

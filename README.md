@@ -1,6 +1,8 @@
 # WebVoiceRecorder
 This project contains a simple Script that is used to record voice files by users. The Idea of the project is based on a Speech to Text Benchmark where we needed a solution to record a huge amount of voice files by different users. So I decided to create simple web gui where we are able to register users, advice those users to speak given content and save the recorded voice files to the storage. After all recordings are done the spoken content can be exported to a CSV-File. This file can be used to create a stt benchmark, calculate the word error rate (wer) or to train and validate a new model.
 
+For security reasons there are two possible authentication flows. The first one is with an internal mysql database and really straight forward. There are now special rules for a password security or anything else. This should be used for development or test environments, but not in production. For a production environment there is a oauth2 implementation that has been tested with an own keycloak installation. In this step all Users must be registered in keycloak, the complete authentication process is done by an oauth2-token with keycloak. 
+
 All functions in a short overview:
 
 - *Adminarea*
@@ -24,20 +26,16 @@ All functions in a short overview:
 ## Usage
 
 ### Login
-Login as user that has been definied by adminarea (or directly in database)
+Registered users can login by the selected login mechanism. This screenshot shows the integrated loginscreen based on the local database login:
 
 ![Login Screen](https://github.com/tschiffler/WebVoiceRecorder/raw/main/Documentation/00%20images/screen_login.png "Login Screen")
 
 ### Admin-Area
 
 #### User-Management
-List of existing Users, new Users can be created by click on specified button. To edit a user just click on the requested row
-
-![List of existing Users](https://github.com/tschiffler/WebVoiceRecorder/raw/main/Documentation/00%20images/usermanagement_list.png "List of existing Users")
-
-Screen to create or edit a User. Only users with role "Speaker" are able to speak content.
-
-![Create new User](https://github.com/tschiffler/WebVoiceRecorder/raw/main/Documentation/00%20images/usermanagement_create.png?raw=true "Create new User")
+See more about the User-Management in the chosen authentication-flow:
+- [local mysql based login](README_LOCALLOGIN.md)
+- [oauth2 based login on keycloak](README_KEYCLOAK.md)
 
 #### Content-Management
 Upload the CSV-File (example is located in Documentation/02 Dataset) and assign the content that should be spoken to the users.
@@ -72,8 +70,10 @@ While the recording the user can choose if the file was OK or if the user made a
 
 ## setup
 - download or clone the script
+- run composer to retrieve required dependencies
+- if you want to use the oauth2 based login - create required realms, users -> [see documentation](README_KEYCLOAK.md)  
 - open "config.inc.php" and configure
-- initialize database structure with scripts stored in 'Documentation\01 Database-Scripts'
+- initialize database structure with scripts stored in 'Documentation\01 Database-Scripts\1_structure.sql'
 - open browser and navigate to folder where the script is located
 - login with adminuser (data located at 2_basedata.sql)
 - import the first dataset
